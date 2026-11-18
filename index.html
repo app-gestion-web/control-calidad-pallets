@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Calidad - Despacho de Pallets</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cloudflare.com"></script>
+
+</head>
+
+<body>
+
+    <!-- ÚNICO CONTENEDOR PRINCIPAL  -->
+    <div id="todo-el-form" class="pdf-page">
+
+        <!-- ENCABEZADO -->
+        <header class="header-table">
+            <div class="header-logo-container">
+                <img src="imagenes/logo.jpg" alt="Pallets Callupe" class="company-logo">
+            </div>
+            <div class="header-main-title">
+                <h2>FORMATO DE CONTROL DE CALIDAD - DESPACHO DE PALLETS</h2>
+            </div>
+            <div class="header-meta-info">
+                <div class="meta-row border-bottom">PRO-FR-07</div>
+                <div class="meta-row border-bottom">Versión: 4</div>
+                <div class="meta-row border-bottom">Fecha: 30/12/2024</div>
+                <div class="meta-subgrid">
+                    <div class="meta-cell border-right">Elaborado:<br>ACC</div>
+                    <div class="meta-cell border-right">Revisado:<br>JSIG</div>
+                    <div class="meta-cell">Aprobado:<br>GG</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DATOS GENERALES  -->
+        <section class="general-data-box">
+            <div class="grid-row-header-data">
+                <div class="form-group"><label>FECHA:</label><input type="date" id="fecha"></div>
+                <div class="form-group"><label>OT:</label><input type="text" id="orden-trabajo"></div>
+                <div class="form-group"><label>CLIENTE:</label><input type="text" id="cliente"></div>
+                <div class="form-group"><label>EVALUADOR:</label><input type="text" id="evaluador"></div>
+                <div class="excel-page-cell">PAGINA: 1 DE 2</div>
+            </div>
+            <!-- Segunda Fila Completa de 3 bloques -->
+            <div class="grid-row border-top">
+                <div class="form-group"><label>PRODUCTO:</label><input type="text" id="producto"></div>
+                <div class="form-group"><label>ESPECIE:</label><input type="text" id="especie"></div>
+                <div class="form-group"><label>CÓDIGO DE PROD.:</label><input type="text" id="codigo-producto"></div>
+            </div>
+        </section>
+
+        <!-- MATRIZ PRINCIPAL DE MUESTRAS (20 FILAS) -->
+        <section class="matrix-container">
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th rowspan="3" class="col-num">Nº MUESTRA</th>
+                        <th colspan="6">TACOS</th>
+                        <th colspan="9">TABLILLAS SUPERIORES</th>
+                        <th colspan="6">TABLILLAS INFERIORES</th>
+                        <th colspan="3">TAB. TRANSVERSAL</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">TACO 1</th>
+                        <th colspan="3">TACO 2</th>
+                        <th colspan="3">TAB S1</th>
+                        <th colspan="3">TAB S2</th>
+                        <th colspan="3">TAB S3</th>
+                        <th colspan="3">TAB I1</th>
+                        <th colspan="3">TAB I2</th>
+                        <th colspan="3">TAB T</th>
+                    </tr>
+                    <tr>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                        <th>E</th>
+                        <th>A</th>
+                        <th>L</th>
+                    </tr>
+                </thead>
+                <tbody id="muestras-body">
+
+                </tbody>
+            </table>
+        </section>
+
+        <!-- INICIO DE LA SECCIÓN INFERIOR  -->
+        <div class="contenedor-inferior-unificado">
+
+            <section class="excel-bottom-section">
+
+                <!-- COLUMNA IZQUIERDA: MÉTODO DE EVALUACIÓN Y LEYENDAS -->
+                <div class="bottom-column-left">
+                    <table class="excel-subtable">
+                        <thead>
+                            <tr>
+                                <th colspan="4">MÉTODO DE EVALUACIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="lbl-bold text-nowrap" style="width: 25%;">NORMA</td>
+                                <td class="val-text-center" style="width: 35%;" colspan="2">
+                                    <label class="excel-chk-label"><input type="checkbox"> ISO 2859-1</label>
+                                </td>
+                                <td class="cell-input-box"><input type="text" placeholder="otro"></td>
+
+                            </tr>
+                            <tr>
+                                <td class="lbl-bold text-nowrap">PLAN DE MUESTREO</td>
+                                <td class="val-text-center" colspan="2">
+                                    <label class="excel-chk-label"><input type="checkbox"> Simple</label>
+                                </td>
+                                <td class="cell-input-box"><input type="text" placeholder="otro"></td>
+
+                            </tr>
+                            <tr>
+                                <td class="lbl-bold text-nowrap" rowspan="2">NIVEL DE<br>INSPECCIÓN</td>
+                                <td class="val-text-center" colspan="3">
+                                    <label class="excel-chk-label" style="margin-right: 15px;"><input type="checkbox">
+                                        I</label>
+                                    <label class="excel-chk-label" style="margin-right: 15px;"><input type="checkbox">
+                                        II</label>
+                                    <label class="excel-chk-label"><input type="checkbox"> III</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="val-text-center" colspan="3">
+                                    <label class="excel-chk-label" style="margin-right: 10px;"><input type="checkbox">
+                                        S1</label>
+                                    <label class="excel-chk-label" style="margin-right: 10px;"><input type="checkbox">
+                                        S2</label>
+                                    <label class="excel-chk-label" style="margin-right: 10px;"><input type="checkbox">
+                                        S3</label>
+                                    <label class="excel-chk-label"><input type="checkbox"> S4</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-bold" colspan="4"
+                                    style="text-align: left; padding-left: 5px; background: #e9edf5; font-weight: bold;">
+                                    Nivel Aceptable de Calidad</td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-bold text-nowrap">defectos mayores</td>
+                                <td class="val-text-center" colspan="2">
+                                    <label class="excel-chk-label" style="margin-right: 10px;"><input type="checkbox">
+                                        2.5%</label>
+                                    <label class="excel-chk-label"><input type="checkbox"> 6.5%</label>
+                                </td>
+                                <td class="cell-input-box"><input type="text" placeholder="otro"></td>
+
+                            </tr>
+                            <tr>
+                                <td class="lbl-bold text-nowrap">defectos menores</td>
+                                <td class="val-text-center" colspan="2">
+                                    <label class="excel-chk-label" style="margin-right: 10px;"><input type="checkbox">
+                                        6.5%</label>
+                                    <label class="excel-chk-label"><input type="checkbox"> 10%</label>
+                                </td>
+                                <td class="cell-input-box"><input type="text" placeholder="otro"></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- LEYENDA DE ABREVIATURAS -->
+                    <div class="excel-leyenda">
+                        <div class="leyenda-title">LEYENDA DE ABREVIATURAS</div>
+                        <div class="leyenda-grid">
+                            <div><strong>TAB S1:</strong> TABLILLA SUPERIOR 1</div>
+                            <div><strong>TAB I1:</strong> TABLILLA INFERIOR 1</div>
+                            <div><strong>TAB T:</strong> TABLILLA TRANSVERSAL</div>
+                            <div><strong>E:</strong> Espesor (mm)</div>
+                            <div><strong>OT:</strong> ORDEN DE TRABAJO</div>
+                            <div><strong>CH% :</strong> % DE HUMEDAD</div>
+                            <div><strong>A:</strong> Ancho (mm)</div>
+                            <div><strong>L:</strong> Largo (mm)</div>
+                            <div><strong>PROM:</strong> PROMEDIO</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- COLUMNA DERECHA: PARÁMETROS DE EVALUACIÓN  -->
+                <div class="bottom-column-right">
+                    <table class="excel-subtable">
+                        <thead>
+                            <tr>
+                                <th colspan="4">PARÁMETROS DE EVALUACIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="lbl-bold text-nowrap"
+                                    style="width: 50%; text-align: left; padding-left: 5px;">HUMEDAD MÁXIMA PERMITIDA
+                                    (PROMEDIO)</td>
+                                <td class="cell-input-box" colspan="3" style="width: 50%;"><input type="text"
+                                        placeholder="%"></td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-bold" colspan="4"
+                                    style="text-align: left; padding-left: 5px; background: #e9edf5; font-weight: bold;">
+                                    Defectos mayores</td>
+                            </tr>
+                            <tr>
+                                <td class="val-text" rowspan="2"
+                                    style="width: 25%; font-weight: bold; vertical-align: middle;">Grietas o rajaduras
+                                </td>
+                                <td class="val-text" style="width: 20%;">En tabla</td>
+                                <td class="val-text-center" style="width: 35%;">
+                                    <label class="excel-chk-label"><input type="checkbox"> 10% de longitud</label>
+                                </td>
+                                <td class="cell-input-box" style="width: 20%;"><input type="text" placeholder="otro">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="val-text">En taco</td>
+                                <td class="val-text-center">
+                                    <label class="excel-chk-label"><input type="checkbox"> 10% longitud</label>
+                                </td>
+                                <td class="cell-input-box"><input type="text" placeholder="otro"></td>
+                            </tr>
+                            <tr>
+                                <td class="val-text" rowspan="2" style="font-weight: bold; vertical-align: middle;">
+                                    Canto muerto</td>
+                                <td class="val-text-center" colspan="3"
+                                    style="text-align: left !important; padding-left: 10px !important;">
+                                    <label class="excel-chk-label" style="margin-bottom: 3px;"><input type="checkbox">
+                                        15% ancho de tabla </label>
+                                    <label class="excel-chk-label" style="margin-bottom: 3px;"><input type="checkbox">
+                                        10% longitud de tabla</label>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="val-text-center" colspan="3"
+                                    style="text-align: left !important; padding-left: 10px !important;">
+                                    <label class="excel-chk-label"><input type="checkbox"> 20% ancho de tabla </label>
+                                    <label class="excel-chk-label"><input type="checkbox"> 20%
+                                        longitud de tabla</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="val-text" style="font-weight: bold;">Tacos fuera de centro</td>
+                                <td class="val-text-center" colspan="3"
+                                    style="text-align: left !important; padding-left: 10px !important;">
+                                    <label class="excel-chk-label"><input type="checkbox"> máx 5mm del centro</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="val-text" style="font-weight: bold;">Marcado no conforme</td>
+                                <td class="val-text-center" colspan="3">
+                                    <label class="excel-chk-label"><input type="checkbox"> No conforme</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="val-text" style="font-weight: bold;">Separación entre tablillas superiores
+                                </td>
+                                <td class="cell-input-box" colspan="3"><input type="text" placeholder="máx mm"></td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-bold" colspan="4"
+                                    style="text-align: left; padding-left: 5px; background: #e9edf5; font-weight: bold;">
+                                    Defectos menores</td>
+                            </tr>
+                            <tr>
+                                <td class="val-text" rowspan="2" style="font-weight: bold; vertical-align: middle;">
+                                    Nudos muertos</td>
+                                <td class="val-text-center" colspan="2"
+                                    style="text-align: left !important; padding-left: 10px !important;">
+                                    <label class="excel-chk-label"><input type="checkbox"> máx. 10% del ancho de la
+                                        tabla</label>
+                                </td>
+                                <td class="cell-input-box" rowspan="2" style="vertical-align: middle;"><input
+                                        type="text" placeholder="OTRO"></td>
+                            </tr>
+                            <tr>
+                                <td class="val-text-center" colspan="2"
+                                    style="text-align: left !important; padding-left: 10px !important;">
+                                    <label class="excel-chk-label"><input type="checkbox"> máx. 20% del ancho de la
+                                        tabla</label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <br>
+
+            <!-- SECCIÓN DE FIRMAS -->
+            <section class="excel-signatures-section">
+                <div class="excel-sig-box">
+                    <div class="excel-sig-line"></div>
+                    <p>FIRMA DE CALIDAD</p>
+                </div>
+                <div class="excel-sig-box">
+                    <div class="excel-sig-line"></div>
+                    <p>FIRMA DE PRODUCCIÓN</p>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <div id="todo-el-form-p2" class="pdf-page">
+
+        <header class="header-table">
+            <div class="header-logo-container">
+                <img src="imagenes/logo.jpg" alt="Pallets Callupe" class="company-logo">
+            </div>
+            <div class="header-main-title">
+                <h2>FORMATO DE CONTROL DE CALIDAD - DESPACHO DE PALLETS</h2>
+            </div>
+            <div class="header-meta-info">
+                <div class="meta-row border-bottom">PRO-FR-07</div>
+                <div class="meta-row border-bottom">Versión: 4</div>
+                <div class="meta-row border-bottom">Fecha: 27/12/2024</div>
+                <div class="meta-subgrid">
+                    <div class="meta-cell border-right">Elaborado:<br>ACC</div>
+                    <div class="meta-cell border-right">Revisado:<br>JSIG</div>
+                    <div class="meta-cell">Aprobado:<br>GG</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="general-data-box">
+            <div class="grid-row-header-data">
+                <div class="form-group"><label>FECHA:</label><input type="date" id="fecha-p2"></div>
+                <div class="form-group"><label>OT:</label><input type="text" id="ot-p2"></div>
+                <div class="form-group"><label>CLIENTE:</label><input type="text" id="cliente-p2"></div>
+                <div class="form-group"><label>EVALUADOR:</label><input type="text" id="evaluador-p2"></div>
+                <div class="excel-page-cell">PAGINA: 2 DE 2</div>
+            </div>
+            <div class="grid-row border-top">
+                <div class="form-group"><label>PRODUCTO:</label><input type="text" id="producto-p2"></div>
+                <div class="form-group"><label>ESPECIE:</label><input type="text" id="especie-p2"></div>
+                <div class="form-group"><label>CÓDIGO DE PROD.:</label><input type="text" id="codigo-p2"></div>
+            </div>
+        </section>
+
+        <section class="matrix-container">
+            <table class="matrix-table table-p2">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="col-num" style="width: 6%;">Nº MUESTRA</th>
+                        <th rowspan="2" style="width: 8%;">% CH<br>TACO</th>
+                        <th rowspan="2" style="width: 9%;">% CH<br>TABLILLA</th>
+                        <th colspan="3" style="width: 33%;">DIMENSIONES GENERALES DEL PRODUCTO</th>
+                        <th colspan="2" style="width: 12%;">PALLET CONFORME</th>
+                        <th rowspan="2" style="width: 32%;">CAUSA DE NO CONFORMIDAD</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 11%;">ESPESOR (mm)</th>
+                        <th style="width: 11%;">ANCHO (mm)</th>
+                        <th style="width: 11%;">LARGO (mm)</th>
+                        <th style="width: 6%;">SI</th>
+                        <th style="width: 6%;">NO</th>
+                    </tr>
+                </thead>
+                <tbody id="muestras-body-p2">
+                </tbody>
+                <tfoot>
+                    <tr class="row-prom">
+                        <td>PROM/<br>RESULT</td>
+                        <td id="prom-ch-taco">0.0</td>
+                        <td id="prom-ch-tablilla">0.0</td>
+                        <td id="prom-espesor">0.0</td>
+                        <td id="prom-ancho">0.0</td>
+                        <td id="prom-largo">0.0</td>
+                        <td id="total-si">0</td>
+                        <td id="total-no">0</td>
+                        <td>-</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section class="obs-box">
+            <label for="observaciones-p2">OBSERVACIONES Y RESULTADO:</label>
+            <textarea id="observaciones-p2"></textarea>
+        </section>
+
+        <section class="excel-signatures-section" style="margin-top: auto; padding-top: 25px;">
+            <div class="excel-sig-box">
+                <div class="excel-sig-line"></div>
+                <p>FIRMA DE CALIDAD</p>
+            </div>
+            <div class="excel-sig-box">
+                <div class="excel-sig-line"></div>
+                <p>FIRMA DE PRODUCCIÓN</p>
+            </div>
+        </section>
+
+        <div class="actions-container no-print">
+            <button type="button" id="btn-limpiar-p2" class="btn-danger">🗑️ Borrar Ficha</button>
+            <button type="button" id="btn-agregar-bd" class="btn-primary" style="background-color: #d97706;">➕ Guardar
+                en Base de Datos (<span id="contador-bd">0</span>)</button>
+            <button type="button" id="btn-excel-p2" class="btn-primary" style="background-color: #16a34a;">📊 Descargar
+                Excel Completo</button>
+            <button type="button" id="btn-vaciar-bd" class="btn-danger" style="background-color: #475569;">🧹 Vaciar
+                Historial BD</button>
+            <button type="button" id="btn-pdf-p2" class="btn-primary">💾 Guardar en PDF</button>
+        </div>
+
+
+    </div>
+
+
+    <script src="script.js"></script>
+    <script src="script2.js"></script>
+</body>
+
+</html>
