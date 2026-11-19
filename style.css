@@ -586,6 +586,67 @@ body {
     outline: none;
 }
 
+/* ==========================================================================
+   MENÚ FLOTANTE DESPLEGABLE (FAB)
+   ========================================================================== */
+.fab-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+/* Botón principal de despliegue */
+.fab-main-btn {
+    background-color: #1e293b;
+    color: #ffffff;
+    border: none;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.fab-main-btn:hover {
+    background-color: #0f172a;
+    transform: scale(1.03);
+}
+
+/* Contenedor de los botones ocultos */
+.fab-options {
+    display: none;
+    /* Oculto por defecto */
+    flex-direction: column;
+    gap: 8px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    min-width: 210px;
+}
+
+/* Clase que activa la visibilidad al hacer clic */
+.fab-options.activo {
+    display: flex;
+}
+
+.fab-options button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+
 @media screen and (max-width: 820px) {
     body {
         padding: 5px;

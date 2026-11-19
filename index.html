@@ -412,16 +412,22 @@
             </div>
         </section>
 
-        <div class="actions-container no-print">
-            <button type="button" id="btn-limpiar-p2" class="btn-danger">🗑️ Borrar Ficha</button>
-            <button type="button" id="btn-agregar-bd" class="btn-primary" style="background-color: #d97706;">➕ Guardar
-                en Base de Datos (<span id="contador-bd">0</span>)</button>
-            <button type="button" id="btn-excel-p2" class="btn-primary" style="background-color: #16a34a;">📊 Descargar
-                Excel Completo</button>
-            <button type="button" id="btn-vaciar-bd" class="btn-danger" style="background-color: #475569;">🧹 Vaciar
-                Historial BD</button>
-            <button type="button" id="btn-pdf-p2" class="btn-primary">💾 Guardar en PDF</button>
+        <!-- MENÚ FLOTANTE DESPLEGABLE (OCULTO EN PDF) -->
+        <div class="fab-wrapper no-print">
+            <!-- Lista de opciones ocultas que se despliegan hacia arriba -->
+            <div id="fab-menu" class="fab-options">
+                <button type="button" id="btn-pdf-p2" class="btn-primary">💾 Guardar Ficha en PDF</button>
+                <button type="button" id="btn-agregar-bd" class="btn-primary" style="background-color: #d97706;">➕
+                    Guardar en BD (<span id="contador-bd">0</span>)</button>
+                <button type="button" id="btn-excel-p2" class="btn-primary" style="background-color: #16a34a;">📊
+                    Descargar Excel Completo</button>
+                <button type="button" id="btn-limpiar-p2" class="btn-danger">🗑️ Borrar todo</button>
+                <button type="button" id="btn-vaciar-bd" class="btn-danger" style="background-color: #475569;">🧹 Borrar
+                    Historial BD</button>
+            </div>
+            <button type="button" id="btn-fab-toggle" class="fab-main-btn">⚙️ Opciones</button>
         </div>
+
 
 
     </div>

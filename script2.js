@@ -191,6 +191,27 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // 9. Lógica para abrir y cerrar el menú flotante de opciones
+    const btnToggleFab = document.getElementById("btn-fab-toggle");
+    const fabMenu = document.getElementById("fab-menu");
+
+    if (btnToggleFab && fabMenu) {
+        btnToggleFab.addEventListener("click", (e) => {
+            e.stopPropagation(); // Evita que el clic cierre el menú al instante
+            fabMenu.classList.toggle("activo");
+            btnToggleFab.textContent = fabMenu.classList.contains("activo") ? "✖️ Cerrar" : "⚙️ Opciones";
+        });
+
+        // Cierra el menú automáticamente si el usuario toca cualquier otra parte de la hoja
+        document.addEventListener("click", (e) => {
+            if (!fabMenu.contains(e.target) && e.target !== btnToggleFab) {
+                fabMenu.classList.remove("activo");
+                btnToggleFab.textContent = "⚙️ Opciones";
+            }
+        });
+    }
+
 });
 
 
