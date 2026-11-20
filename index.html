@@ -10,6 +10,7 @@
     <link rel="apple-touch-icon" href="imagenes/icono-app.png">
     <link rel="stylesheet" href="style.css">
     <script src="https://cloudflare.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 
 </head>
 
@@ -434,7 +435,17 @@
 
 
     </div>
-
+    <div id="custom-modal" class="modal-overlay no-print">
+        <div class="modal-card">
+            <div id="modal-icon" class="modal-icon">ℹ️</div>
+            <h3 id="modal-title" class="modal-title">Aviso del Sistema</h3>
+            <p id="modal-message" class="modal-message">Mensaje aquí...</p>
+            <div class="modal-actions">
+                <button type="button" id="modal-btn-cancel" class="btn-modal-cancel">Cancelar</button>
+                <button type="button" id="modal-btn-ok" class="btn-modal-ok">Aceptar</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
     <script src="script2.js"></script>

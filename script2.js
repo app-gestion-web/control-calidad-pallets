@@ -77,13 +77,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     actualizarContadorBD();
 
+    function mostrarModal({ titulo, mensaje, icono = "ℹ️", esConfirmacion = false, colorBoton = "#2563eb" }) {
+        return new Promise((resolve) => {
+            const overlay = document.getElementById("custom-modal");
+            const elIcono = document.getElementById("modal-icon");
+            const elTitulo = document.getElementById("modal-title");
+            const elMensaje = document.getElementById("modal-message");
+            const btnOk = document.getElementById("modal-btn-ok");
+            const btnCancel = document.getElementById("modal-btn-cancel");
+
+            elIcono.textContent = icono;
+            elTitulo.textContent = titulo;
+            elMensaje.textContent = mensaje;
+            btnOk.style.backgroundColor = colorBoton;
+
+            btnCancel.style.display = esConfirmacion ? "block" : "none";
+            btnOk.textContent = esConfirmacion ? "Sí, continuar" : "Entendido";
+
+            overlay.classList.add("activo");
+
+            const cerrar = (resultado) => {
+                overlay.classList.remove("activo");
+                btnOk.onclick = null;
+                btnCancel.onclick = null;
+                resolve(resultado);
+            };
+
+            btnOk.onclick = () => cerrar(true);
+            btnCancel.onclick = () => cerrar(false);
+        });
+    }
+
     // Botón A: Guardar registro actual en el historial acumulado
     const btnAgregarBD = document.getElementById("btn-agregar-bd");
     if (btnAgregarBD) {
-        btnAgregarBD.addEventListener("click", () => {
+        btnAgregarBD.addEventListener("click", async () => {
             const ot = document.getElementById("ot-p2").value.trim();
             if (!ot) {
-                alert("⚠️ Por favor ingresa al menos el número de OT antes de guardar en la base de datos.");
+                await mostrarModal({
+                    icono: "⚠️",
+                    titulo: "Falta número de OT",
+                    mensaje: "Por favor ingresa el número de Orden de Trabajo (OT) antes de guardar en la base de datos.",
+                    colorBoton: "#d97706"
+                });
                 return;
             }
 
@@ -109,40 +145,78 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem(CLAVE_BD, JSON.stringify(historial));
 
             actualizarContadorBD();
-            alert(`✅ Registro de la OT ${ot} guardado en la base de datos.\nTotal acumulado: ${historial.length} registros.`);
+            await mostrarModal({
+                icono: "✅",
+                titulo: "Registro Guardado",
+                mensaje: `La evaluación de la OT ${ot} se añadió correctamente.\nTotal acumulado en historial: ${historial.length} registros.`,
+                colorBoton: "#16a34a"
+            });
         });
     }
 
-    // Botón B: Descargar todo el historial acumulado en un archivo Excel (CSV)
+    // Botón B: Descargar todo el historial en un archivo Excel (.xlsx)
     const btnExcel = document.getElementById("btn-excel-p2");
     if (btnExcel) {
-        btnExcel.addEventListener("click", () => {
+        btnExcel.addEventListener("click", async () => {
             const historial = JSON.parse(localStorage.getItem(CLAVE_BD)) || [];
 
             if (historial.length === 0) {
-                alert("⚠️ La base de datos está vacía. Primero presiona 'Guardar en Base de Datos' para acumular registros.");
+                await mostrarModal({
+                    icono: "📂",
+                    titulo: "Base de Datos Vacía",
+                    mensaje: "Aún no hay registros guardados. Presiona primero 'Guardar en BD' para acumular evaluaciones.",
+                    colorBoton: "#d97706"
+                });
                 return;
             }
 
-            const encabezados = [
-                "FECHA", "OT", "CLIENTE", "EVALUADOR", "PRODUCTO", "ESPECIE", "CODIGO DE PROD.",
-                "% CH TACO (PROM)", "% CH TABLILLA (PROM)", "ESPESOR mm (PROM)",
-                "ANCHO mm (PROM)", "LARGO mm (PROM)", "CONFORME SI", "CONFORME NO"
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet("Base de Datos Calidad");
+
+            worksheet.columns = [
+                { header: "FECHA", key: "fecha", width: 14 },
+                { header: "OT", key: "ot", width: 10 },
+                { header: "CLIENTE", key: "cliente", width: 22 },
+                { header: "EVALUADOR", key: "evaluador", width: 20 },
+                { header: "PRODUCTO", key: "producto", width: 16 },
+                { header: "ESPECIE", key: "especie", width: 15 },
+                { header: "CÓDIGO DE PROD.", key: "codigo", width: 18 },
+                { header: "% CH TACO\n(PROM)", key: "chTaco", width: 15 },
+                { header: "% CH TABLILLA\n(PROM)", key: "chTab", width: 16 },
+                { header: "ESPESOR mm\n(PROM)", key: "espesor", width: 15 },
+                { header: "ANCHO mm\n(PROM)", key: "ancho", width: 15 },
+                { header: "LARGO mm\n(PROM)", key: "largo", width: 15 },
+                { header: "CONFORME\nSI", key: "si", width: 13 },
+                { header: "CONFORME\nNO", key: "no", width: 13 }
             ];
 
-            const filasCSV = historial.map(fila =>
-                fila.map(valor => `"${String(valor).replace(/"/g, '""')}"`).join(";")
-            );
+            const filaEncabezado = worksheet.getRow(1);
+            filaEncabezado.height = 30;
+            filaEncabezado.eachCell((cell) => {
+                cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFD9E1F2" } };
+                cell.font = { name: "Arial", size: 9, bold: true, color: { argb: "FF000000" } };
+                cell.alignment = { vertical: "middle", horizontal: "center", wrapText: true };
+                cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+            });
 
-            const contenidoFinal = "\uFEFF" + encabezados.join(";") + "\n" + filasCSV.join("\n");
+            historial.forEach((registro) => {
+                const nuevaFila = worksheet.addRow(registro);
+                nuevaFila.height = 20;
+                nuevaFila.eachCell((cell, colNumber) => {
+                    cell.font = { name: "Arial", size: 9 };
+                    cell.alignment = { vertical: "middle", horizontal: (colNumber >= 3 && colNumber <= 6) ? "left" : "center" };
+                    cell.border = { top: { style: "thin" }, left: { style: "thin" }, bottom: { style: "thin" }, right: { style: "thin" } };
+                });
+            });
 
-            const blob = new Blob([contenidoFinal], { type: "text/csv;charset=utf-8;" });
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
             const url = URL.createObjectURL(blob);
             const enlace = document.createElement("a");
             const fechaHoy = new Date().toISOString().slice(0, 10);
 
             enlace.href = url;
-            enlace.setAttribute("download", `Base_Datos_Calidad_Pallets_${fechaHoy}.csv`);
+            enlace.setAttribute("download", `Base_Datos_Calidad_Pallets_${fechaHoy}.xlsx`);
             document.body.appendChild(enlace);
             enlace.click();
             document.body.removeChild(enlace);
@@ -150,17 +224,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 6. Botón Guardar Ficha Completa (2 páginas) en PDF
-    const btnPdf = document.getElementById("btn-pdf-p2");
-    if (btnPdf) {
-        btnPdf.addEventListener("click", () => window.print());
-    }
-
     // 7. Botón Borrar Ficha (Limpia AMBAS hojas sin borrar la Base de Datos)
     const btnLimpiar = document.getElementById("btn-limpiar-p2");
     if (btnLimpiar) {
-        btnLimpiar.addEventListener("click", () => {
-            if (confirm("¿Deseas limpiar todos los campos de ambas hojas para iniciar una nueva evaluación? (Tu base de datos acumulada se mantendrá a salvo)")) {
+        btnLimpiar.addEventListener("click", async () => {
+            const confirmado = await mostrarModal({
+                icono: "🗑️",
+                titulo: "¿Limpiar Ficha Actual?",
+                mensaje: "Se borrarán los datos escritos en ambas hojas para iniciar una nueva.\n(Tu historial de base de datos no se verá afectado).",
+                esConfirmacion: true,
+                colorBoton: "#ef4444"
+            });
+
+            if (confirmado) {
                 document.querySelectorAll("input[type='text'], input[type='number'], input[type='date'], textarea").forEach(el => el.value = "");
                 document.querySelectorAll("input[type='checkbox']").forEach(el => el.checked = false);
                 idsProm.forEach(id => document.getElementById(id).textContent = "0.0");
@@ -170,27 +246,48 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // 6. Botón Guardar Ficha Completa (2 páginas) en PDF
+    const btnPdf = document.getElementById("btn-pdf-p2");
+    if (btnPdf) {
+        btnPdf.addEventListener("click", () => window.print());
+    }
+
     // 8. Botón para Vaciar el Historial de la Base de Datos
     const btnVaciarBD = document.getElementById("btn-vaciar-bd");
     if (btnVaciarBD) {
-        btnVaciarBD.addEventListener("click", () => {
+        btnVaciarBD.addEventListener("click", async () => {
             const historial = JSON.parse(localStorage.getItem(CLAVE_BD)) || [];
-
             if (historial.length === 0) {
-                alert("ℹ️ El historial de la base de datos ya está vacío.");
+                await mostrarModal({
+                    icono: "ℹ️",
+                    titulo: "Historial Vacío",
+                    mensaje: "No hay registros acumulados para borrar en este momento.",
+                    colorBoton: "#475569"
+                });
                 return;
             }
 
-            // Doble verificación de seguridad para evitar pérdidas de datos
-            const confirmar = confirm(`⚠️ ADVERTENCIA: Estás a punto de borrar ${historial.length} registros acumulados en la base de datos.\n\n¿Ya descargaste tu archivo Excel antes de borrarlos?`);
+            const confirmado = await mostrarModal({
+                icono: "🚨",
+                titulo: "¿Vaciar Base de Datos?",
+                mensaje: `Estás a punto de eliminar ${historial.length} registros guardados.\nAsegúrate de haber descargado el Excel antes de continuar.`,
+                esConfirmacion: true,
+                colorBoton: "#dc2626"
+            });
 
-            if (confirmar) {
+            if (confirmado) {
                 localStorage.removeItem(CLAVE_BD);
                 actualizarContadorBD();
-                alert("✅ El historial de la base de datos ha sido vaciado por completo (0 registros).");
+                await mostrarModal({
+                    icono: "🧹",
+                    titulo: "Historial Vaciado",
+                    mensaje: "La base de datos ha vuelto a 0 registros.",
+                    colorBoton: "#16a34a"
+                });
             }
         });
     }
+
 
     // 9. Lógica para abrir y cerrar el menú flotante de opciones
     const btnToggleFab = document.getElementById("btn-fab-toggle");

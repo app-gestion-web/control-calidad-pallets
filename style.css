@@ -483,6 +483,112 @@ body {
     background-color: #dc2626;
 }
 
+/* ==========================================================================
+   MODAL PERSONALIZADO CENTRADO (VENTANA FLOTANTE)
+   ========================================================================== */
+.modal-overlay {
+    display: none;
+    /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.6);
+    /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(2px);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.modal-overlay.activo {
+    display: flex;
+    animation: fadeInModal 0.2s ease-out;
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 360px;
+    border-radius: 12px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    border: 1px solid #e2e8f0;
+}
+
+.modal-icon {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.modal-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.modal-message {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.45;
+    margin-bottom: 20px;
+    white-space: pre-line;
+    /* Respeta los saltos de línea */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-modal-ok,
+.btn-modal-cancel {
+    padding: 9px 18px;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    flex: 1;
+    transition: background-color 0.2s;
+}
+
+.btn-modal-ok {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.btn-modal-ok:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-modal-cancel {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.btn-modal-cancel:hover {
+    background-color: #cbd5e1;
+}
+
+
 /* ====================
    REGLAS DE IMPRESIÓN 
    ==================== */
